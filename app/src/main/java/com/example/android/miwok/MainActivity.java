@@ -15,8 +15,12 @@
  */
 package com.example.android.miwok;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,11 +30,54 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
+
+        TextView Numbers = (TextView) findViewById(R.id.numbers);
+        Numbers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NumbersActivity.class);
+                startActivity(intent);
+                Toast toast = Toast.makeText(getApplicationContext(),"opening numbers", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        TextView Family = (TextView) findViewById(R.id.family);
+        Family.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, FamilyMemberActivity.class);
+                startActivity(intent);
+                Toast toast = Toast.makeText(getApplicationContext(),"opening family", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        TextView Phrases = (TextView) findViewById(R.id.phrases);
+        Phrases.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PhrasesActivity.class);
+                startActivity(intent);
+                Toast toast = Toast.makeText(getApplicationContext(),"opening phrases", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+
+        TextView Colors= (TextView) findViewById(R.id.colors);
+        Colors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ColorsActivity.class);
+                startActivity(intent);
+                Toast toast = Toast.makeText(getApplicationContext(),"opening colors", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+
     }
-    public void OpenNumbersList(){
 
 
-
-
-    }
 }

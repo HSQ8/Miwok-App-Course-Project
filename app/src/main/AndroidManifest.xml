@@ -29,10 +29,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NumbersActivity" />
-        <activity android:name=".FamilyMemberActivity" />
-        <activity android:name=".ColorsActivity" />
-        <activity android:name=".PhrasesActivity"></activity>
+        <activity android:name=".NumbersActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/category_numbers"/>
+        <activity android:name=".FamilyMemberActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ColorsActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".PhrasesActivity"
+            android:parentActivityName=".MainActivity"/>
+
     </application>
 
 </manifest>
