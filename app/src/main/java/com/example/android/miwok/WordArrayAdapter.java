@@ -22,7 +22,7 @@ public class WordArrayAdapter extends ArrayAdapter<Word>{
     public View getView (int position, View convertView, ViewGroup parent){
 Word word = getItem(position);
         if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.listitemlayout,parent);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.listitemlayout,parent,false);
         }
         TextView english = (TextView) convertView.findViewById(R.id.englishview);
         TextView miwok = (TextView) convertView.findViewById(R.id.miwokview);
