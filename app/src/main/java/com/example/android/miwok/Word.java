@@ -7,17 +7,26 @@ package com.example.android.miwok;
 public class Word {
     private String eng;
     private String miwok;
-
-    public Word(String _eng, String _miwok){
+    private int pic;
+    private boolean hasImage = false;
+        public Word(String _eng, String _miwok){
         eng = _eng;
         miwok= _miwok;
-            }
-            @Override
-    public String toString(){
-                return eng + "\n" + miwok;
 
-            }
-    public String getDefaultTranslation(){ return eng;  }
+        }
+
+    public Word(String _eng, String _miwok, int _pic){
+        eng = _eng;
+        miwok= _miwok;
+        pic = _pic;
+        hasImage = true;
+    }
+
+
+    public String getDefaultTranslation(){ return eng;}
     public String getMiwokTranslation(){return miwok;}
+    public int getPic(){ return pic;}
+    public boolean isHasImage(){return hasImage;}
+
 
 }
