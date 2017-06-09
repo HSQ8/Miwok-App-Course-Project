@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, NumbersActivity.class);
                 startActivity(intent);
-                Toast toast = Toast.makeText(getApplicationContext(),"opening numbers", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "opening numbers", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, FamilyMemberActivity.class);
                 startActivity(intent);
-                Toast toast = Toast.makeText(getApplicationContext(),"opening family", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "opening family", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -59,19 +59,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, PhrasesActivity.class);
                 startActivity(intent);
-                Toast toast = Toast.makeText(getApplicationContext(),"opening phrases", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "opening phrases", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
 
 
-        TextView Colors= (TextView) findViewById(R.id.colors);
+        TextView Colors = (TextView) findViewById(R.id.colors);
         Colors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ColorsActivity.class);
                 startActivity(intent);
-                Toast toast = Toast.makeText(getApplicationContext(),"opening colors", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "opening colors", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });

@@ -38,16 +38,7 @@ public class WordArrayAdapter extends ArrayAdapter<Word> {
             illustration.setImageResource(word.getPic());
         }
 
-        if (word.ishasAudio()) {
-            pronounciation = MediaPlayer.create(getContext(),word.getAudio());
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    pronounciation.start();
-                }
-            });
 
-        }
 
         TextView english = (TextView) convertView.findViewById(R.id.englishview);
         TextView miwok = (TextView) convertView.findViewById(R.id.miwokview);

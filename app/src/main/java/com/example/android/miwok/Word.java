@@ -12,34 +12,48 @@ public class Word {
     private boolean hasImage = false;
     private boolean hasAudio = false;
 
-    public Word(String _eng, String _miwok){
+    public Word(String _eng, String _miwok, int _audio) {
         eng = _eng;
-        miwok= _miwok;
+        miwok = _miwok;
+        hasAudio = true;
+        audio = _audio;
 
-        }
 
-    public Word(String _eng, String _miwok, int _pic, int _audio){
+    }
+
+    public Word(String _eng, String _miwok, int _pic, int _audio) {
         eng = _eng;
-        miwok= _miwok;
+        miwok = _miwok;
         pic = _pic;
         hasImage = true;
         hasAudio = true;
         audio = _audio;
     }
 
-    public Word(String _eng, String _miwok, int _pic){
-        eng = _eng;
-        miwok= _miwok;
-        pic = _pic;
-        hasImage = true;
+
+    public int getAudio() {
+        return audio;
     }
 
-    public int getAudio(){return audio;}
-    public boolean ishasAudio(){return hasAudio;}
-    public String getDefaultTranslation(){ return eng;}
-    public String getMiwokTranslation(){return miwok;}
-    public int getPic(){ return pic;}
-    public boolean isHasImage(){return hasImage;}
+    public boolean ishasAudio() {
+        return hasAudio;
+    }
+
+    public String getDefaultTranslation() {
+        return eng;
+    }
+
+    public String getMiwokTranslation() {
+        return miwok;
+    }
+
+    public int getPic() {
+        return pic;
+    }
+
+    public boolean isHasImage() {
+        return hasImage;
+    }
 
 
 }
