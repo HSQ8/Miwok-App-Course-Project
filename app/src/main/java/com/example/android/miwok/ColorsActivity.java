@@ -11,6 +11,12 @@ import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
     MediaPlayer pronounciation;
+    MediaPlayer.OnCompletionListener mOncompletion = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +41,17 @@ public class ColorsActivity extends AppCompatActivity {
         numbersView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                releaseMediaPlayer();
                 pronounciation = MediaPlayer.create(ColorsActivity.this, ColorsList.get(i).getAudio());
                 pronounciation.start();
+                pronounciation.setOnCompletionListener(mOncompletion);
             }
         });
+    }
+    private void releaseMediaPlayer() {
+        if (pronounciation != null) {
+            pronounciation.release();
+            pronounciation = null;
+        }
     }
 }

@@ -11,8 +11,12 @@ import java.util.ArrayList;
 
 public class NumbersActivity extends AppCompatActivity {
     MediaPlayer pronounciation;
-
-    @Override
+    MediaPlayer.OnCompletionListener mOncompletion = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+        }
+    };
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sub_activity);
@@ -36,11 +40,20 @@ public class NumbersActivity extends AppCompatActivity {
         numbersView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                releaseMediaPlayer();
                 pronounciation = MediaPlayer.create(NumbersActivity.this, numbersList.get(i).getAudio());
                 pronounciation.start();
+                pronounciation.setOnCompletionListener(mOncompletion);
             }
         });
 
+    }
+
+    private void releaseMediaPlayer() {
+        if (pronounciation != null) {
+            pronounciation.release();
+            pronounciation = null;
+        }
     }
 }
 
