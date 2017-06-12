@@ -1,8 +1,11 @@
 package com.example.android.miwok;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -10,6 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class FamilyMemberActivity extends AppCompatActivity {
+    AudioManager am;
     MediaPlayer pronounciation;
     MediaPlayer.OnCompletionListener mOncompletion = new MediaPlayer.OnCompletionListener() {
         @Override
@@ -49,9 +53,15 @@ public class FamilyMemberActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 releaseMediaPlayer();
-                pronounciation = MediaPlayer.create(FamilyMemberActivity.this, FamilyList.get(i).getAudio());
-                pronounciation.start();
-                pronounciation.setOnCompletionListener(mOncompletion);
+                am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                int audioFocusRequestResult = am.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                if (audioFocusRequestResult == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                    pronounciation = MediaPlayer.create(FamilyMemberActivity.this, FamilyList.get(i).getAudio());
+                    pronounciation.start();
+                    pronounciation.setOnCompletionListener(mOncompletion);
+                } else if (audioFocusRequestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
+                    // do nothing as of right now
+                }
             }
         });
     }
@@ -60,7 +70,9 @@ public class FamilyMemberActivity extends AppCompatActivity {
         if (pronounciation != null) {
             pronounciation.release();
             pronounciation = null;
-        }
+            am.abandonAudioFocus(audioFocusChangeListener);}
+
+
     }
 
     @Override
@@ -73,4 +85,29 @@ public class FamilyMemberActivity extends AppCompatActivity {
         super.onStop();
         releaseMediaPlayer();
     }
+
+    AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int i) {
+
+            switch (i) {
+                case AudioManager.AUDIOFOCUS_LOSS:
+                    releaseMediaPlayer();
+                    Log.v("media player", "audio focus lost");
+                    break;
+                case AudioManager.AUDIOFOCUS_GAIN:
+                    pronounciation.start();
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                    pronounciation.pause();
+                    pronounciation.seekTo(0);
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    pronounciation.pause();
+                    pronounciation.seekTo(0);
+                    break;
+
+            }
+        }
+    };
 }

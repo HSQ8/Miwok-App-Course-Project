@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,14 +38,15 @@ public class WordArrayAdapter extends ArrayAdapter<Word> {
         if (word.isHasImage()) {
             illustration.setImageResource(word.getPic());
         }
-
-
+        ImageView playbutton = (ImageView) convertView.findViewById(R.id.playericon);
+        playbutton.setImageResource(R.drawable.ic_play_arrow_white_24dp);
 
         TextView english = (TextView) convertView.findViewById(R.id.englishview);
         TextView miwok = (TextView) convertView.findViewById(R.id.miwokview);
         english.setBackgroundColor(ContextCompat.getColor(getContext(), colorid));
         miwok.setBackgroundColor(ContextCompat.getColor(getContext(), colorid));
-
+        LinearLayout imagewrapper = (LinearLayout) convertView.findViewById(R.id.playericonwrap);
+        imagewrapper.setBackgroundColor(ContextCompat.getColor(getContext(),colorid));
         english.setText(word.getDefaultTranslation());
         miwok.setText(word.getMiwokTranslation());
 

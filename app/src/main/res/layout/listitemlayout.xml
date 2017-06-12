@@ -1,47 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:minHeight="@dimen/list_item_height"
-    android:background="@color/tan_background"
     android:id="@+id/roolayout"
-   >
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="@dimen/list_item_height"
-    android:id="@+id/wordImage"
-    android:layout_gravity="center"
-   />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/tan_background"
+    android:minHeight="@dimen/list_item_height"
+    android:orientation="horizontal"
+    android:drawSelectorOnTop="true">
+
+    <ImageView
+        android:id="@+id/wordImage"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_gravity="center"
+        tools:src="@drawable/family_younger_brother"
+        android:drawSelectorOnTop="true"/>
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
         android:id="@+id/wordcolor"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
 
         >
 
-    <TextView
+        <TextView
 
-        android:id="@+id/miwokview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@android:color/white"
-        android:layout_weight="1"
-        android:padding="8dp"/>
-    <TextView
+            android:id="@+id/miwokview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:padding="8dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@android:color/white"
+            tools:text="miwok"
+            android:drawSelectorOnTop="true"/>
 
-        android:id="@+id/englishview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="top"
-        android:textColor="@android:color/white"
-        android:layout_weight="1"
-        android:padding="8dp"/>
+        <TextView
+
+            android:id="@+id/englishview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:padding="8dp"
+            android:textColor="@android:color/white"
+            tools:text="english"
+            android:drawSelectorOnTop="true"/>
+
+
+    </LinearLayout>
+<LinearLayout
+    android:id="@+id/playericonwrap"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/playericon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        tools:src="@drawable/ic_play_arrow_white_24dp"
+        android:layout_gravity="center"
+        android:drawSelectorOnTop="true"
+        />
+
 </LinearLayout>
+
 
 </LinearLayout>
