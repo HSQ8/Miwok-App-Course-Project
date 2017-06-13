@@ -1,18 +1,26 @@
 package com.example.android.miwok;
 
+
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ColorsActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class PhrasesFragment extends Fragment {
+    private String activityName = "Phrases";
+    public String returnName(){return activityName;}
     AudioManager am;
     MediaPlayer pronounciation;
     MediaPlayer.OnCompletionListener mOncompletion = new MediaPlayer.OnCompletionListener() {
@@ -22,48 +30,64 @@ public class ColorsActivity extends AppCompatActivity {
         }
     };
 
+    public PhrasesFragment() {
+        // Required empty public constructor
+    }
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.sub_activity);
-        setTitle("Colors");
-        final ArrayList<Word> ColorsList = new ArrayList<Word>();
-        ColorsList.add(new Word("red", "weṭeṭṭi", R.drawable.color_red, R.raw.color_red));
-        ColorsList.add(new Word("mustard yellow", "chiwiiṭә", R.drawable.color_mustard_yellow,
-                R.raw.color_mustard_yellow));
-        ColorsList.add(new Word("dusty yellow", "ṭopiisә", R.drawable.color_dusty_yellow,
-                R.raw.color_dusty_yellow));
-        ColorsList.add(new Word("green", "chokokki", R.drawable.color_green, R.raw.color_green));
-        ColorsList.add(new Word("brown", "ṭakaakki", R.drawable.color_brown, R.raw.color_brown));
-        ColorsList.add(new Word("gray", "ṭopoppi", R.drawable.color_gray, R.raw.color_gray));
-        ColorsList.add(new Word("black", "kululli", R.drawable.color_black, R.raw.color_black));
-        ColorsList.add(new Word("white", "kelelli", R.drawable.color_white, R.raw.color_white));
 
-        WordArrayAdapter numberAdapter = new WordArrayAdapter(this, ColorsList, R.color.category_colors);
-        ListView numbersView = (ListView) findViewById(R.id.list);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootview = inflater.inflate(R.layout.sub_activity,container,false);
+        final ArrayList<Word> PhrasesList = new ArrayList<Word>();
+        PhrasesList.add(new Word("Where are you going?", "minto wuksus", R.raw.phrase_where_are_you_going));
+        PhrasesList.add(new Word("What is your name?", "tinnә oyaase'nә", R.raw.phrase_what_is_your_name));
+        PhrasesList.add(new Word("My name is...", "oyaaset...", R.raw.phrase_my_name_is));
+        PhrasesList.add(new Word("How are you feeling?", "michәksәs?", R.raw.phrase_how_are_you_feeling));
+        PhrasesList.add(new Word("I’m feeling good.", "kuchi achit", R.raw.phrase_im_feeling_good));
+        PhrasesList.add(new Word("Are you coming?", "әәnәs'aa?", R.raw.phrase_are_you_coming));
+        PhrasesList.add(new Word("Yes, I’m coming.", "hәә’ әәnәm", R.raw.phrase_yes_im_coming));
+        PhrasesList.add(new Word("I’m coming.", "әәnәm", R.raw.phrase_im_coming));
+        PhrasesList.add(new Word("Let’s go.", "yoowutis", R.raw.phrase_lets_go));
+        PhrasesList.add(new Word("Come here.", "әnni'nem", R.raw.phrase_come_here));
 
+        WordArrayAdapter numberAdapter = new WordArrayAdapter(getActivity(), PhrasesList, R.color.category_phrases);
+        ListView numbersView = (ListView) rootview.findViewById(R.id.list);
         numbersView.setAdapter(numberAdapter);
-
         numbersView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 releaseMediaPlayer();
-                am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                am = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
                 int audioFocusRequestResult = am.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 if (audioFocusRequestResult == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    pronounciation = MediaPlayer.create(ColorsActivity.this, ColorsList.get(i).getAudio());
+                    pronounciation = MediaPlayer.create(getActivity(), PhrasesList.get(i).getAudio());
                     pronounciation.start();
                     pronounciation.setOnCompletionListener(mOncompletion);
                 } else if (audioFocusRequestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
                     // do nothing as of right now
                 }
-
             }
         });
+
+        return rootview;
+    }
+    private void releaseMediaPlayer() {
+        if (pronounciation != null) {
+            pronounciation.release();
+            pronounciation = null;
+            am.abandonAudioFocus(audioFocusChangeListener);}
+
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
-    protected void onStop() {
+    @Override
+    public void onStop() {
         super.onStop();
         releaseMediaPlayer();
     }
@@ -93,12 +117,4 @@ public class ColorsActivity extends AppCompatActivity {
         }
     };
 
-    private void releaseMediaPlayer() {
-        if (pronounciation != null) {
-            pronounciation.release();
-            pronounciation = null;
-            am.abandonAudioFocus(audioFocusChangeListener);
-        }
-
-    }
 }

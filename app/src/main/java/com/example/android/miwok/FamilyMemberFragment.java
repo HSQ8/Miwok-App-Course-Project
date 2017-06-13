@@ -1,18 +1,26 @@
 package com.example.android.miwok;
 
+
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class FamilyMemberActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FamilyMemberFragment extends Fragment {
+    private String activityName = "FamilyMember";
+    public String returnName(){return activityName;}
     AudioManager am;
     MediaPlayer pronounciation;
     MediaPlayer.OnCompletionListener mOncompletion = new MediaPlayer.OnCompletionListener() {
@@ -22,11 +30,16 @@ public class FamilyMemberActivity extends AppCompatActivity {
         }
     };
 
+    public FamilyMemberFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.sub_activity);
-        setTitle("Family");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootview = inflater.inflate(R.layout.sub_activity,container,false);
+
         final ArrayList<Word> FamilyList = new ArrayList<Word>();
         FamilyList.add(new Word("father", "әpә", R.drawable.family_father, R.raw.family_father));
         FamilyList.add(new Word("mother", "әṭa", R.drawable.family_mother, R.raw.family_mother));
@@ -46,17 +59,17 @@ public class FamilyMemberActivity extends AppCompatActivity {
                 R.raw.family_grandfather));
 
 
-        WordArrayAdapter numberAdapter = new WordArrayAdapter(this, FamilyList, R.color.category_family);
-        ListView numbersView = (ListView) findViewById(R.id.list);
+        WordArrayAdapter numberAdapter = new WordArrayAdapter(getActivity(), FamilyList, R.color.category_family);
+        ListView numbersView = (ListView) rootview.findViewById(R.id.list);
         numbersView.setAdapter(numberAdapter);
         numbersView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 releaseMediaPlayer();
-                am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                am = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
                 int audioFocusRequestResult = am.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 if (audioFocusRequestResult == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    pronounciation = MediaPlayer.create(FamilyMemberActivity.this, FamilyList.get(i).getAudio());
+                    pronounciation = MediaPlayer.create(getActivity(), FamilyList.get(i).getAudio());
                     pronounciation.start();
                     pronounciation.setOnCompletionListener(mOncompletion);
                 } else if (audioFocusRequestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
@@ -64,8 +77,9 @@ public class FamilyMemberActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
+        return rootview;
+    }
     private void releaseMediaPlayer() {
         if (pronounciation != null) {
             pronounciation.release();
@@ -76,12 +90,12 @@ public class FamilyMemberActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         releaseMediaPlayer();
     }
@@ -110,4 +124,5 @@ public class FamilyMemberActivity extends AppCompatActivity {
             }
         }
     };
+
 }
